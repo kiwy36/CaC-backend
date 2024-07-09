@@ -29,11 +29,11 @@ const traerUnProducto = async (req, res) => {
 
 // Crear un nuevo producto
 const crearProducto = async (req, res) => {
-  const { nombre, descripcion, precio } = req.body;
+  const { titulo, contenido, precio } = req.body;
   try {
     const nuevoProducto = await Producto.create({
-      nombre,
-      descripcion,
+      titulo,
+      contenido,
       precio,
     });
     res.status(201).json(nuevoProducto);
@@ -46,12 +46,12 @@ const crearProducto = async (req, res) => {
 // Actualizar un producto por ID
 const actualizarProducto = async (req, res) => {
   const { id } = req.params;
-  const { nombre, descripcion, precio } = req.body;
+  const { titulo, contenido, precio } = req.body;
   try {
     const producto = await Producto.findByPk(id);
     if (producto) {
-      producto.nombre = nombre;
-      producto.descripcion = descripcion;
+      producto.titulo = titulo;
+      producto.contenido = contenido;
       producto.precio = precio;
       await producto.save();
       res.json(producto);

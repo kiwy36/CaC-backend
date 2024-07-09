@@ -4,7 +4,7 @@ const cors = require("cors");
 const postRouter = require("./routes/PostRouter.js")
 const usuariosRouter = require("./routes/usuariosRouter.js");
 const productosRouter = require("./routes/productosRouter.js");
-const tiendasRouter = require("./routes/tiendasRouter.js");
+const carritoRouter = require("./routes/carritoRouter.js");
 const db = require("./data/db.js");
 
 const app = express();
@@ -22,7 +22,7 @@ app.get("/", (req, res) => {
 app.use("/posteos", postRouter);
 app.use("/usuarios", usuariosRouter);
 app.use("/productos", productosRouter);
-app.use("/tiendas", tiendasRouter);
+app.use("/carrito", carritoRouter);
 
 // Conexión a la base de datos
 const conexionDB = async () => {
