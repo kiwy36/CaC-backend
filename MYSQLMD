@@ -1,0 +1,38 @@
+/*crear base de datos
+CREATE SCHEMA `posteos24255` DEFAULT CHARACTER SET utf8 ;
+crear tabla de posteos
+id ,titutlo ,contenido , fecha de emision, fecha de actualizacion
+CREATE TABLE `posteos24255`.`posteos` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(30) NULL,
+  `contenido` VARCHAR(145) NULL,
+  `createAt` DATETIME NULL,
+  `updateAt` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+*/
