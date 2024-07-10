@@ -19,11 +19,16 @@
         </ul>
     </nav>
 </header>
-
 <main>
-    <h1>carrito</h1>
+    <h1>Carrito de Compras</h1>
     <div class="contenido">
-        <!-- Aquí se mostrarán las tiendas -->
+        <!-- Aquí se mostrarán los productos en el carrito -->
+    </div>
+    <div id="total-carrito">
+        <p>Total: $<span id="total-precio"></span></p>
+        <button id="vaciar-carrito">Vaciar Carrito</button>
+        <button id="terminar-compra">Terminar Compra</button>
+        <div id="mensaje-compra"></div>
     </div>
 </main>
 
@@ -32,6 +37,6 @@
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script src="./tiendas.js"></script> <!-- Archivo JS para manejar la lógica -->
+<script src="./carrito.js"></script> <!-- Archivo JS para manejar la lógica -->
 </body>
 </html>

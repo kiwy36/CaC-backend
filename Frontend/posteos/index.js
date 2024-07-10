@@ -4,9 +4,7 @@ document.addEventListener("DOMContentLoaded",()=>{
     const bodyTablaPosteos = document.querySelector("#body-tabla-posteos")
     /* Obtener el formulario para crear un nuevo posteo */
     const formCrearPosteo = document.querySelector("#form-crear-posteo")
-    
     // funcion para obtener los datos de nuestra API utilizando AXIOS
-    
     const fetchPosteos = async ()=>{
     try {
         const respuesta = await axios.get (`http://localhost:3030/posteos/`)
@@ -22,34 +20,29 @@ document.addEventListener("DOMContentLoaded",()=>{
         const celdaTitulo = document.createElement("td")
         const celdaContenido=document.createElement("td")
         const celdaAcciones= document.createElement("td")
-    
         // asignar el contenido de las celdas
         celdaTitulo.textContent = posteo.titulo
         celdaContenido.textContent = posteo.contenido
-    
         // crear el boton de eliminar
         const botonEliminar = document.createElement("button")
         botonEliminar.textContent = "Eliminar"
         botonEliminar.classList.add("eliminar");
         botonEliminar.addEventListener("click",()=>{borrarPosteo(posteo.id)})
-    
          // crear el boton para editar un posteo
-         const botonEditar = document.createElement("button")
+        const botonEditar = document.createElement("button")
             botonEditar.textContent = "Editar"
             botonEditar.classList.add("editar");
-         botonEditar.addEventListener("click", ()=>{
+        botonEditar.addEventListener("click", ()=>{
             // Redirigir a la pagina de edicion  con el ID del post en la url
             window.location.href = `edit.html?id=${posteo.id}`
-         })
-     // agregar los botones a la celda de acciones
-         celdaAcciones.appendChild(botonEditar)
-         celdaAcciones.appendChild(botonEliminar)
-    
+        })
+// agregar los botones a la celda de acciones
+    celdaAcciones.appendChild(botonEditar)
+    celdaAcciones.appendChild(botonEliminar)
     // agregamos las celdas a la fila
     fila.appendChild(celdaTitulo)
     fila.appendChild(celdaContenido)
     fila.appendChild(celdaAcciones)
-    
     // Agregar la fila al cuerpo de la tabla
     bodyTablaPosteos.appendChild(fila)
     })
@@ -67,7 +60,6 @@ document.addEventListener("DOMContentLoaded",()=>{
             console.error (`Error al eliminar el post : ${error}`)
         }
     }
-    
     // Funcion para crear un nuevo posteo
     formCrearPosteo.addEventListener("submit", async function (evento){
         evento.preventDefault();
@@ -81,13 +73,10 @@ document.addEventListener("DOMContentLoaded",()=>{
             formCrearPosteo.reset()
             // recargue los posteos actualizado
             fetchPosteos()
-            
         } catch (error) {
             console.error (`Error al postear: ${error}`)
         }
-    
     })
-    
     //llamar a la funcion para obtener y mostrar los posteos cuando Carga la pagina
     fetchPosteos()
     })

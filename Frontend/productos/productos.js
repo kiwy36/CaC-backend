@@ -16,7 +16,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const fetchProductos = async () => {
         try {
             const respuesta = await axios.get("http://localhost:3030/productos/");
-            console.log("Respuesta de la API:", respuesta.data); // Agregar console.log aquí
 
             const productos = respuesta.data;
             // Limpiar la tabla antes de agregar los nuevos datos
@@ -47,6 +46,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 botonEliminar.textContent = "Eliminar";
                 botonEliminar.classList.add("eliminar");
                 botonEliminar.addEventListener("click", () => borrarProducto(producto.id));
+                const btnAgregarCarrito = document.createElement("button");
+                btnAgregarCarrito.textContent = "Agregar al Carrito";
+                btnAgregarCarrito.addEventListener("click", () => {
+                    agregarAlCarrito(producto.id); // Función para agregar al carrito
+                });
 
                 // Agregar botones al divProducto
                 divProducto.appendChild(tituloProducto);
@@ -54,6 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 divProducto.appendChild(precioProducto);
                 divProducto.appendChild(botonEditar);
                 divProducto.appendChild(botonEliminar);
+                divProducto.appendChild(btnAgregarCarrito);
 
                 // Agregar el producto al cuerpo de la tabla
                 bodyTablaProductos.appendChild(divProducto);
@@ -126,6 +131,18 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error(`Error al actualizar el producto: ${error}`);
         }
     });
+    const agregarAlCarrito = async (idProducto) => {
+        try {
+            const respuesta = await axios.post("http://localhost:3030/carrito/", {
+                id: idProducto
+            });
+            console.log("Producto agregado al carrito:", respuesta.data);
+            alert("Producto agregado al carrito correctamente.");
+        } catch (error) {
+            console.error("Error al agregar producto al carrito:", error);
+            alert("Error al agregar producto al carrito. Por favor, inténtalo de nuevo.");
+        }
+    };
 
     // Llamar a la función para obtener y mostrar los productos cuando carga la página
     fetchProductos();
