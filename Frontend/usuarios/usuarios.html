@@ -1,3 +1,4 @@
+<!-- usuarios.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,9 +23,38 @@
 
 <main>
     <h1>Usuarios</h1>
-    <div class="contenido">
-        <!-- Aquí se mostrarán los usuarios -->
+
+    <!-- Formulario de registro de usuario -->
+    <div class="form-container">
+        <form id="form-registrar-usuario">
+            <h2>Registrar Usuario</h2>
+            <label for="nombre-registro">Nombre:</label>
+            <input type="text" id="nombre-registro" name="nombre" required>
+            <label for="email-registro">Email:</label>
+            <input type="email" id="email-registro" name="email" required>
+            <label for="contraseña-registro">Contraseña:</label>
+            <input type="password" id="contraseña-registro" name="contraseña" required>
+            <button type="submit">Registrar</button>
+            <p id="mensaje-registro"></p>
+        </form>
+
+        <!-- Formulario de inicio de sesión -->
+        <form id="form-iniciar-sesion">
+            <h2>Iniciar Sesión</h2>
+            <label for="nombre-login">Nombre:</label>
+            <input type="text" id="nombre-login" name="nombre" required>
+            <label for="contraseña-login">Contraseña:</label>
+            <input type="password" id="contraseña-login" name="contraseña" required>
+            <button type="submit">Iniciar Sesión</button>
+            <p id="mensaje-login"></p>
+        </form>
     </div>
+
+    <!-- Saludo al usuario logueado -->
+    <h1 id="saludo-usuario"></h1>
+
+    <!-- Botón para cerrar sesión -->
+    <button id="btnCerrarSesion">Cerrar Sesión</button>
 </main>
 
 <footer>
@@ -35,3 +65,4 @@
 <script src="./usuarios.js"></script> <!-- Archivo JS para manejar la lógica -->
 </body>
 </html>
+

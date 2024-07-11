@@ -1,40 +1,73 @@
-/* DOMContentLoaded */
+// usuarios.js
 document.addEventListener("DOMContentLoaded", () => {
-    /* Obtener el body de la tabla donde se mostrarán los usuarios */
-    const bodyTablaUsuarios = document.querySelector(".contenido");
+    const formRegistrarUsuario = document.getElementById("form-registrar-usuario");
+    const formIniciarSesion = document.getElementById("form-iniciar-sesion");
+    const btnCerrarSesion = document.getElementById("btnCerrarSesion");
+    const saludoUsuario = document.getElementById("saludo-usuario");
 
-    // Función para obtener y mostrar los usuarios
-    const fetchUsuarios = async () => {
+
+    // Función para registrar un nuevo usuario
+    formRegistrarUsuario.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        const nombre = document.getElementById("nombre-registro").value;
+        const email = document.getElementById("email-registro").value;
+        const contraseña = document.getElementById("contraseña-registro").value;
+
         try {
-            const respuesta = await axios.get("http://localhost:3030/usuarios/");
-            const usuarios = respuesta.data;
-            // Limpiar la tabla antes de agregar los nuevos datos
-            bodyTablaUsuarios.innerHTML = "";
-
-            // Iterar sobre los datos y agregar cada usuario a la tabla
-            usuarios.forEach(usuario => {
-                // Crear elementos HTML para cada usuario
-                const divUsuario = document.createElement("div");
-                divUsuario.classList.add("usuario");
-
-                const nombreUsuario = document.createElement("h2");
-                nombreUsuario.textContent = usuario.nombre;
-
-                const emailUsuario = document.createElement("p");
-                emailUsuario.textContent = `Email: ${usuario.email}`;
-
-                // Agregar elementos al contenedor del usuario
-                divUsuario.appendChild(nombreUsuario);
-                divUsuario.appendChild(emailUsuario);
-
-                // Agregar el usuario al cuerpo de la tabla
-                bodyTablaUsuarios.appendChild(divUsuario);
+            const respuesta = await axios.post("http://localhost:3030/usuarios/", {
+                nombre,
+                email,
+                contraseña
             });
+            console.log("Usuario registrado:", respuesta.data);
+            document.getElementById("mensaje-registro").textContent = "Usuario registrado correctamente.";
+            formRegistrarUsuario.reset();
         } catch (error) {
-            console.error(`Error al obtener los usuarios: ${error}`);
+            console.error("Error al registrar usuario:", error.response.data.error);
+            document.getElementById("mensaje-registro").textContent = error.response.data.error;
+        }
+    });
+
+    // Función para iniciar sesión
+    formIniciarSesion.addEventListener("submit", async (evento) => {
+        evento.preventDefault();
+        const nombre = document.getElementById("nombre-login").value;
+        const contraseña = document.getElementById("contraseña-login").value;
+
+        try {
+            const respuesta = await axios.post("http://localhost:3030/usuarios/iniciar-sesion", {
+                nombre,
+                contraseña
+            });
+            console.log("Inicio de sesión:", respuesta.data);
+            document.getElementById("mensaje-login").textContent = "Inicio de sesión exitoso.";
+            formIniciarSesion.reset();
+            saludoUsuario.textContent = `¡Hola, ${respuesta.data.usuario.nombre}!`;
+        } catch (error) {
+            console.error("Error al iniciar sesión:", error.response.data.error);
+            document.getElementById("mensaje-login").textContent = error.response.data.error;
+        }
+    });
+
+     // Función para cerrar sesión
+    const cerrarSesion = async () => {
+        try {
+            const respuesta = await axios.post("http://localhost:3030/usuarios/cerrar-sesion");
+            if (respuesta.status === 200) {
+                // Limpiar saludo del usuario
+                saludoUsuario.textContent = "";
+                // Mostrar formularios y elementos relevantes para usuarios no logueados
+                formIniciarSesion.style.display = "block";
+                // Mostrar el botón de cerrar sesión nuevamente
+                btnCerrarSesion.style.display = "inline-block"; // Ajusta el estilo según corresponda
+                // Lógica adicional de limpieza o redirección si es necesario
+                alert("Sesión cerrada exitosamente.");
+            }
+        } catch (error) {
+            console.error("Error al cerrar sesión:", error);
+            alert("Error al cerrar sesión. Por favor, intenta nuevamente.");
         }
     };
-
-    // Llamar a la función para obtener y mostrar los usuarios cuando carga la página
-    fetchUsuarios();
+    // Evento click para cerrar sesión
+    btnCerrarSesion.addEventListener("click", cerrarSesion);
 });

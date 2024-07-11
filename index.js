@@ -1,7 +1,8 @@
 // Importar módulos necesarios
 const express = require("express");
 const cors = require("cors");
-const postRouter = require("./routes/PostRouter.js")
+const session = require("express-session");
+const postRouter = require("./routes/PostRouter.js");
 const usuariosRouter = require("./routes/usuariosRouter.js");
 const productosRouter = require("./routes/productosRouter.js");
 const carritoRouter = require("./routes/carritoRouter.js");
@@ -13,6 +14,15 @@ const port = 3030;
 app.use(cors());
 app.use(express.json());
 
+// Configuración de la sesión
+app.use(
+  session({
+    secret: 'secreto', // Cambia esto a un valor secreto para tu aplicación
+    resave: false,
+    saveUninitialized: false,
+    cookie: { secure: false } // Asegúrate de cambiar esto a true si usas HTTPS
+  })
+);
 
 // Rutas
 app.get("/", (req, res) => {
